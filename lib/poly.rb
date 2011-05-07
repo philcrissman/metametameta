@@ -22,7 +22,6 @@ class PolynomialExpression
   end
   
   def to_s
-    # @terms.sort_by(&:exponent).reverse.inject(""){ |exp, t| exp + " + #{t.coefficient}(x^#{t.exponent})"}
     @terms.sort_by(&:exponent).reverse.map(&:to_s).join(" + ")
   end
 end

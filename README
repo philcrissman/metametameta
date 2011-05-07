@@ -1,0 +1,9 @@
+This is just a bunch of random hacky stuff. Fork, add, change, whatever. You can send pull requests if you want. I will try to get to them all. :-)
+
+The ord.rb file adds a methods to Fixnum and String to turn numbers into phrases and phrases into numbers. This is then used in Array with method_missing to make Array's respond to ordinal phrases; e.g. my_array.three_hundred_forty_third would return my_array[343]. No, I don't know why anyone would use this either, but it was sort of fun to make.
+
+The poly.rb file defines the classes PolynomialTerm and PolynomialExpression (a polynomial expression is made up of several PolynomialTerm objects) which can do things like return their own derivatives, and calculate the zeros (if any) of the function they represent using Newton's method.
+
+If you fork and require new gems, please add them to the Gemfile for bundler.
+
+There are no tests yet! Maybe you could add some.
