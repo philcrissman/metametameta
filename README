@@ -1,8 +1,27 @@
 This is just a bunch of random hacky stuff. Fork, add, change, whatever. You can send pull requests if you want. I will try to get to them all. :-)
 
+ord.rb
+======
+
 The ord.rb file adds a methods to Fixnum and String to turn numbers into phrases and phrases into numbers. This is then used in Array with method_missing to make Array's respond to ordinal phrases; e.g. my_array.three_hundred_forty_third would return my_array[343]. No, I don't know why anyone would use this either, but it was sort of fun to make.
 
+
+poly.rb
+=======
+
 The poly.rb file defines the classes PolynomialTerm and PolynomialExpression (a polynomial expression is made up of several PolynomialTerm objects) which can do things like return their own derivatives, and calculate the zeros (if any) of the function they represent using Newton's method.
+
+Also added FunctionalTerm and FunctionalExpression classes; a functional term can take an arbitrary function, not just the :** function which PolynomialTerm uses. So you can:
+  FunctionalTerm.new(:coefficient => 3, :function => :**, :argument => 2) # to emulate PolynomialTerm, giving 3*x**2
+  FunctionalTerm.new(:function => :log) # ruby's log is the natural log, or ln.
+  FunctionalTerm.new(:function => :log, :argument => 2) # if log gets an argument, that become the base.
+  FunctionalTerm.new(:function => :sin) 
+  FunctionalTerm.new(:function => :log, :argument => Math::E) # same as if no argument were given; e is the base of ln.
+
+Note: you can also provide a proc instead of a symbol for the function parameter, but then FunctionalTerm will not know how to calculate the derivative... UNLESS you also pass the derivative as an argument. This is a little less magical, as you have to figure out the derivative yourself and provide it as an argument, but it gives you a little more freedom. The :derivative you provide can be a FunctionalTerm object, or just a proc.
+
+errata
+======
 
 If you fork and require new gems, please add them to the Gemfile for bundler.
 

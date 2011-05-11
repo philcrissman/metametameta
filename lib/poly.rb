@@ -94,10 +94,11 @@ class FunctionalTerm
   end
   
   def derivative
-    # hmmm.
-    # well, this is a little complicated. We could use a big case statement, but...
-    FunctionalTerm.new(@derivatives[@options[:function]])
-    # this is pretty fragile. Clearly, this will ONLY work if the :function is a symbol, not a Proc.
+    if @options[:derivative]
+      @options[:derivative].is_a?(FunctionalTerm) ? @options[:derivative] : FunctionalTerm.new(:function => @options[:derivative])
+    else
+      FunctionalTerm.new(@derivatives[@options[:function]])
+    end
   end
   
 end
