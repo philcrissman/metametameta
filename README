@@ -18,7 +18,14 @@ Also added FunctionalTerm and FunctionalExpression classes; a functional term ca
   FunctionalTerm.new(:function => :sin) 
   FunctionalTerm.new(:function => :log, :argument => Math::E) # same as if no argument were given; e is the base of ln.
 
-Note: you can also provide a proc instead of a symbol for the function parameter, but then FunctionalTerm will not know how to calculate the derivative... UNLESS you also pass the derivative as an argument. This is a little less magical, as you have to figure out the derivative yourself and provide it as an argument, but it gives you a little more freedom. The :derivative you provide can be a FunctionalTerm object, or just a proc.
+Note: you can also provide a proc instead of a symbol for the function parameter, but then FunctionalTerm will not know how to calculate the derivative... UNLESS you also pass the derivative as an argument. This is a little less magical, as you have to figure out the derivative yourself and provide it as an argument, but it gives you a little more freedom. The :derivative you provide can be a FunctionalTerm object, or just a proc; eg:
+  FunctionalTerm.new(:function => lambda{|n| 1.0/n }, :derivative => lambda {|n| -1*n**-2 })
+  FunctionalTerm.new(:function => lambda{|n} 1.0/n }, :derivative => FunctionalTerm.new(:coefficient => -1, :function => :**, :argument => -2))
+
+
+So, you _could_ use this for some basic calculus, but it's still pretty basic. It assumes each term is simple (ie, one function), so it doesn't know the chain rule. You could give it a more complex function, but you would need to provide a lambda for the derivative yourself.
+
+If you really need to do calculus programmatically, you should probably use Mathematica or something. This is solely to explore some meta-programming concepts. :-)
 
 errata
 ======
