@@ -12,6 +12,7 @@ poly.rb
 The poly.rb file defines the classes PolynomialTerm and PolynomialExpression (a polynomial expression is made up of several PolynomialTerm objects) which can do things like return their own derivatives, and calculate the zeros (if any) of the function they represent using Newton's method.
 
 Also added FunctionalTerm and FunctionalExpression classes; a functional term can take an arbitrary function, not just the :** function which PolynomialTerm uses. So you can:
+  
   FunctionalTerm.new(:coefficient => 3, :function => :**, :argument => 2) # to emulate PolynomialTerm, giving 3*x**2
   FunctionalTerm.new(:function => :log) # ruby's log is the natural log, or ln.
   FunctionalTerm.new(:function => :log, :argument => 2) # if log gets an argument, that become the base.
@@ -19,8 +20,11 @@ Also added FunctionalTerm and FunctionalExpression classes; a functional term ca
   FunctionalTerm.new(:function => :log, :argument => Math::E) # same as if no argument were given; e is the base of ln.
 
 Note: you can also provide a proc instead of a symbol for the function parameter, but then FunctionalTerm will not know how to calculate the derivative... UNLESS you also pass the derivative as an argument. This is a little less magical, as you have to figure out the derivative yourself and provide it as an argument, but it gives you a little more freedom. The :derivative you provide can be a FunctionalTerm object, or just a proc; eg:
+  
   FunctionalTerm.new(:function => lambda{|n| 1.0/n }, :derivative => lambda {|n| -1*n**-2 })
   FunctionalTerm.new(:function => lambda{|n} 1.0/n }, :derivative => FunctionalTerm.new(:coefficient => -1, :function => :**, :argument => -2))
+  FunctionalTerm.new(:function => lambda{|n| Math::E**n }, :derivative => lambda{|n| Math::E**n }) # aha!
+  FunctionalTerm.new(:function => lambda{|n| 3**a }, :derivative => lambda{|n| 3.log * 3**n })
 
 
 So, you _could_ use this for some basic calculus, but it's still pretty basic. It assumes each term is simple (ie, one function), so it doesn't know the chain rule. You could give it a more complex function, but you would need to provide a lambda for the derivative yourself.
