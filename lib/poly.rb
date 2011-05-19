@@ -14,7 +14,7 @@ class PolynomialExpression
     PolynomialExpression.new(@terms.map{|t| t.derivative })
   end
   
-  def newton(guess, precision = 1.0e-20)
+  def newton(guess, precision = 1.0e-10)
     if self.call(guess).abs <= precision
       guess
     else
