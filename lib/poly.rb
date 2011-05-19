@@ -60,15 +60,17 @@ class FunctionalTerm
       raise NoFunctionProvidedException.new("you can't have a functional term that doesn't have a function")
     end
     
+    if [:+, :-, :*, :/, :**].include?(@options[:function]) && @options[:argument] == nil
+      raise ArgumentError.new("the #{@options[:function]} function needs an :argument to be provided")
+    end
+    
     if @options[:function] == :log
       @options[:argument] ||= Math::E
     else
       @options[:argument] ||= 1
     end
     
-    if [:+, :-, :*, :/, :**].include?(@options[:function]) && @options[:argument] == nil
-      raise ArgumentError.new("the #{@options[:function]} function needs an :argument to be provided")
-    end
+    
     
     @derivatives = {
       :**     => {:coefficient => @options[:coefficient] * @options[:argument], :function => :**, :argument => @options[:argument] - 1},

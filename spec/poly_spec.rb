@@ -80,3 +80,36 @@ describe Numeric do
   end
 end
 
+describe FunctionalTerm do
+  
+  it "should require a function in the options provided" do
+    expect do
+      FunctionalTerm.new(:coefficient => 3, :argument => 4)
+    end.to raise_error(NoFunctionProvidedException)
+  end
+  
+  it "should set the coefficient to 1 if none is provided" do
+    term = FunctionalTerm.new(:function => :**, :argument => 4)
+    term.options[:coefficient].should == 1
+  end
+  
+  it "should set the argument to 1 if none is provided, and function is not :log" do
+    term = FunctionalTerm.new(:function => :sin)
+    term.options[:argument].should == 1
+  end
+  
+  it "should set the argument to Math::E if function is :log, and argument is not provided" do
+    term = FunctionalTerm.new(:function => :log)
+    term.options[:argument].should == Math::E
+  end
+  
+  it "should require an argument to be passed for certain functions" do
+    functions_requiring_arguments = [:+, :-, :*, :/, :**]
+    functions_requiring_arguments.each do |f|
+      expect do
+        FunctionalTerm.new(:function => f)
+      end.to raise_error(ArgumentError, "the #{f} function needs an :argument to be provided")
+    end
+  end
+  
+end
