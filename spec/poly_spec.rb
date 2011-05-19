@@ -55,3 +55,28 @@ describe PolynomialExpression do
   end
 end
 
+# changes to Numeric!
+describe Numeric do
+  
+  # this is a bit of a hacky spec
+  it "should respond directly to a list of methods from Math" do
+    math_methods = [:sin, :cos, :tan, :sinh, :cosh, :tanh, :asin, :acos, :atan, :asinh, :acosh, :atanh, :sqrt, :log10]
+    math_methods.each do |method|
+      subject.respond_to?(method).should == true
+    end
+  end
+  
+  describe "the log method" do
+    it "should return the natural log if no argument is provided" do
+      4.log.should == 4.log(Math::E)
+    end
+    
+    it "should use the argument as the base, if provided" do
+      4.log(2).should be_within(0.00001).of(2.0)
+      4.log(10).should be_within(0.00001).of(0.60206)
+      4.log(Math::E).should be_within(0.00001).of(1.38629)
+    end
+    
+  end
+end
+
